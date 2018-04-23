@@ -201,14 +201,12 @@ func findAlls(factors []int, primes []int) uint64 {
 // combinatorics algorithm.
 func findMinWithFactors(numFactors int) {
 	primes := calcPrimes(100)
-	factors, order, expanded := calcFactors(primes, numFactors)
-	fmt.Println("factors", factors)
-	fmt.Println("order", order)
-	fmt.Println("expanded", expanded)
+	_, _, expanded := calcFactors(primes, numFactors)
 	billMin := billAlgorithm(expanded, primes)
-	fmt.Println("billMin", billMin)
+	fmt.Println("Minimum with factors: ", numFactors)
+	fmt.Println("    billMin is ", billMin)
 	minimum := findAlls(expanded, primes)
-	fmt.Println("minimum", minimum)
+	fmt.Println("    actual minimum", minimum)
 }
 
 // finds where the two algorithms are different.
@@ -317,7 +315,7 @@ func factorNumber(primes []int, number int) {
 
 func main() {
 	// uncomment one of these to run
-	findMinWithFactors(36)
+	// findMinWithFactors(36)
 	// findBillAlgoDifferent()
 	// findSeries(1000)
 	// findHighlyCompositeNumbers(10000)
