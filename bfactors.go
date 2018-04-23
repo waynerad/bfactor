@@ -5,26 +5,6 @@ import (
 	"strconv"
 )
 
-// crude brute force integer exponentiation so we don't have to convert to float and back to use math.Exp()
-// we're using small enough ints that this should be ok
-func intexp(aa int, bb int) uint64 {
-	var abig uint64
-	var rr uint64
-	var prev uint64
-	rr = 1
-	prev = 1
-	abig = uint64(aa)
-	for ii := 0; ii < bb; ii++ {
-		prev = rr
-		rr *= abig
-		if rr < prev {
-			// This should be an error-prone way of detecting overflows
-			return 0 // too big for us to care about
-		}
-	}
-	return rr
-}
-
 // Sieve of Erastrathenes algorithm -- fastest way to get primes, but
 // you have to specify what number to go up to in advance
 func calcPrimes(upto int) []int {
@@ -78,6 +58,26 @@ func calcFactors(primes []int, number int) (map[int]int, []int, []int) {
 		}
 	}
 	return factors, order, expanded
+}
+
+// crude brute force integer exponentiation so we don't have to convert to float and back to use math.Exp()
+// we're using small enough ints that this should be ok
+func intexp(aa int, bb int) uint64 {
+	var abig uint64
+	var rr uint64
+	var prev uint64
+	rr = 1
+	prev = 1
+	abig = uint64(aa)
+	for ii := 0; ii < bb; ii++ {
+		prev = rr
+		rr *= abig
+		if rr < prev {
+			// This should be an error-prone way of detecting overflows
+			return 0 // too big for us to care about
+		}
+	}
+	return rr
 }
 
 // finds the smallest using Bill's algorithm.
@@ -317,7 +317,7 @@ func factorNumber(primes []int, number int) {
 
 func main() {
 	// uncomment one of these to run
-	// findMinWithFactors(36)
+	findMinWithFactors(36)
 	// findBillAlgoDifferent()
 	// findSeries(1000)
 	// findHighlyCompositeNumbers(10000)
