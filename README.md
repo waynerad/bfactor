@@ -11,18 +11,18 @@ Anyway, running Bill's algorithm against my "brute force" algorithm to test all 
 
 The code here provides the following functions:
 
-findMinWithFactors() finds the smallest number with N factors, e.g. findMinWithFactors(36) finds the smallest number with 36 factors (which is 24), using my combinatorics algorithm.
-billAlgorithm() finds the smallest using Bill's algorithm.
-findBillAlgoDifferent() finds where the two algorithms are different.
-findSeries() generates a series of the smallest number with N factors for sequential N, and
-findHighlyCompositeNumbers(), finds a list of highly composite numbers, which I haven't mentioned thus far, but is what got me and Bill talking about "36 factors" in the first place
+* findMinWithFactors() finds the smallest number with N factors, e.g. findMinWithFactors(36) finds the smallest number with 36 factors (which is 24), using my combinatorics algorithm.
+* billAlgorithm() finds the smallest using Bill's algorithm.
+* findBillAlgoDifferent() finds where the two algorithms are different.
+* findSeries() generates a series of the smallest number with N factors for sequential N, and
+* findHighlyCompositeNumbers(), finds a list of highly composite numbers, which I haven't mentioned thus far, but is what got me and Bill talking about "36 factors" in the first place
 
 In addition to all this, this code has some handy helper functions that you can use anywhere:
 
-calcPrimes(), which calculates primes (using the sieve of Eratosthenes algorithm), up to some limit (the other functions require a list of primes as input)
-calcFactors(), which finds the prime factors of some number
-countFactors(), which counts the number of factors a number has given its prime factorization
-showFactorization(), which displays the prime factorization to the user
+* calcPrimes(), which calculates primes (using the sieve of Eratosthenes algorithm), up to some limit (the other functions require a list of primes as input)
+* calcFactors(), which finds the prime factors of some number
+* countFactors(), which counts the number of factors a number has given its prime factorization
+* showFactorization(), which displays the prime factorization to the user
 
 The code does have some issues, notably that, even when using unsigned 64-bit integers, it frequently overflows. To understand why this is the case, consider the prime number 67. The only numbers that have 67 factors are prime numbers to the 68th power. The smallest of these is 2^68. However, a 64-bit unsigned int can only go up to 2^65 - 1. Therefore it is easy to see, that as soon as you ask for the minimum number with N factors, as soon as N gets up to 67 this program will begin to fail to come up with the answers. It will still work with composite numbers after 67 but will fail on other primes. This can be remedied by using Go's math/big package for infinite-precision arithmetic. Bill wrote his program in Python, though, which automatically bumped his variables up to infinite precision ints, so was able to calculate all of these without modifying his code. However, since we are searching for the minimums, and as long as we're interested in minimums that aren't huge numbers (N highly composite instead of prime), this code will work ok even with this issue. But it's something to be aware of before you put this code into some production system or something.
 
